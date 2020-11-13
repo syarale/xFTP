@@ -7,37 +7,6 @@
 
 #include "common.h"
 
-
-
-static int
-service_loop(int client_fd)
-{
-    const char* ret = "hello client";
-    ssize_t len;
-    char recv_buf[MAX_DATA_MESSAGE];
-
-    for(;;) {
-        int recv_ret;
-
-        printf("[INFO]: Wait for data\n");
-        recv_ret = recv(client_fd, recv_buf, sizeof(recv_buf), 0);
-        if (recv_ret == 0) {
-            break;
-        }
-
-        printf("[INFO]: Get data:%s\n", recv_buf);
-        if (strncmp(recv_buf, "exit", 4) == 0) {
-            break;
-        }
-        send(client_fd, ret, MAX_DATA_MESSAGE, 0);
-        printf("[INFO]: Send data:%s\n\n", ret);
-    }
-
-
-    return 0;
-}
-
-
 static int
 start_listen(struct sockaddr_in* client_addr)
 {
@@ -52,12 +21,9 @@ start_listen(struct sockaddr_in* client_addr)
 
     bind(listen_fd, (struct sockaddr*) &server_addr, sizeof(server_addr));
     listen(listen_fd, MAX_LISTEN);
-    printf("[INFO]: Listen default port.\n");
+    printf("[xftpd]: Listen default port.\n");
 
     return listen_fd;
-
-
-
 }
 
 static int
@@ -68,7 +34,7 @@ wait_connect(int listen_fd, struct sockaddr_in* client_addr)
 
     client_len = sizeof(client_addr);
     client_fd = accept(listen_fd, (struct sockaddr*)&client_addr, &client_len);
-    printf("[INFO]: Create connection with client.\n");
+    printf("[xftpd]: Create connection with client.\n");
 
     return client_fd;
     
@@ -83,19 +49,24 @@ main()
     struct sockaddr_in client_addr;
 
     listen_fd = start_listen(&client_addr);
-
-
     for (;;) {
+        printf("[xftpd]: Wait to connect...\n");
         client_fd = wait_connect(listen_fd, &client_addr);
         if ((child_pid = fork()) == 0) {
+            char client_fd_buf[10];
+
             close(listen_fd);
-            service_loop(client_fd);
+            snprintf(client_fd_buf, 10, "%d", client_fd);
+
+            // launch xftp-server to process request.
+            char* argv[]={"./xftp-server", client_fd_buf, NULL};
+            char* envp[]={NULL};
+            execve("./xftp-server", argv, envp);
             exit(0);
         }
         close(client_fd);
     }
 
-    printf("finished...\n");
-
+    printf("[xftpd]: xftpd exited...\n");
     return 0;
 }

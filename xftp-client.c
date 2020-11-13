@@ -1,16 +1,19 @@
 #include <stdio.h>
-#include "common.h"
 #include <stdio.h>
 #include <sys/socket.h>
 #include <string.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+#include "common.h"
+#include "netbuf.h"
+
 
 /*
  * Call connect() function, and return the sockfd on success, -1 on error.
  */
-int connect_server(char* server_ip)
+int
+connect_server(char* server_ip)
 {
     int sockfd;
     int conn_ret;

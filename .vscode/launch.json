@@ -8,7 +8,7 @@
             "name": "gcc - 生成和调试活动文件",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/root/leisy_xftp/xftp",
+            "program": "/root/leisy_xftp/sftp",
             // "program": "/root/leisy_xftp/Makefile",
             "args": [],
             "stopAtEntry": false,

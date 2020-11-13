@@ -5,9 +5,11 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+#include "common.h"
+#include "netbuf.h"
 #include "xftp.h"
 #include "xftp-client.h"
-#include "common.h"
+
 
 
 static int
@@ -31,12 +33,12 @@ interactive_loop(FILE* fp, int sockfd)
                 cmd_buf[len - 1] = '\0';
             }
         
-        send(sockfd, cmd_buf, len, 0);
+        write(sockfd, cmd_buf, len);
         if (strncmp(cmd_buf, "exit", 4) == 0) {
             break;
         }
 
-        recv(sockfd, recv_buf, sizeof(recv_buf), 0);
+        read(sockfd, recv_buf, sizeof(recv_buf));
         printf("[INFO]: Get data: %s \n", recv_buf);
     }
     
