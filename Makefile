@@ -32,8 +32,8 @@ xftp: xftp.o common.o xftp-client.o
 xftp.o: xftp.c
 	gcc -c xftp.c -o xftp.o
 
-xftp-client.o: xftp-client.c common.c netbuf.o
-	gcc -c xftp-client.c -o xftp-client.o netbuf.o
+xftp-client.o: xftp-client.c
+	gcc -c xftp-client.c -o xftp-client.o
 
 xftpd: xftpd.o common.o
 	gcc xftpd.o common.o -o xftpd
@@ -45,7 +45,7 @@ common.o: common.c
 	gcc -c common.c -o common.o
 
 xftp-server: xftp-server.o common.o netbuf.o
-	gcc xftp-server.o common.o -o xftp-server
+	gcc xftp-server.o common.o netbuf.o -o xftp-server
 
 xftp-server.o: xftp-server.c
 	gcc -c xftp-server.c -o xftp-server.o

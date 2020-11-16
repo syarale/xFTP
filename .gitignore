@@ -53,3 +53,5 @@ dkms.conf
 
 xftp
 xftpd
+test.c
+test
