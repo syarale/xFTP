@@ -51,7 +51,6 @@ main(int argc, char** argv)
     const char* ret = "hello client";
     fd_set rset, wset;
     
-
     printf("[xftp-server]: Launch xftp-server process...\n");
     client_fd = atoi(argv[1]);
     in = client_fd;

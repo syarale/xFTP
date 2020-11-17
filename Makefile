@@ -23,7 +23,7 @@
 # clean:  
 # 	rm -rf *.o xftp xftpd
 
-all : xftp xftp-server xftpd
+all : xftp xftp-server xftpd unittest_main
 .PHONY : all
 
 xftp: xftp.o common.o xftp-client.o
@@ -53,6 +53,12 @@ xftp-server.o: xftp-server.c
 netbuf.o: netbuf.c
 	gcc -c netbuf.c -o netbuf.o
 
+unittest_main: unittest_main.o netbuf.o
+	gcc unitest_main.o netbuf.o -o unitest_main
+
+unittest_main.o: unittest_main.c
+	gcc -c unittest_main.c -o unitest_main.o
+
 .PHONY: clean
 clean:  
-	rm -rf *.o xftp xftpd xftp-server
+	rm -rf *.o xftp xftpd xftp-server unittest_main

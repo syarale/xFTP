@@ -33,7 +33,8 @@ interactive_loop(FILE* fp, int sockfd)
                 cmd_buf[len - 1] = '\0';
             }
         
-        write(sockfd, cmd_buf, len);
+        // write(sockfd, cmd_buf, len);
+        send_data(sockfd, cmd_buf, len);
         if (strncmp(cmd_buf, "exit", 4) == 0) {
             break;
         }
@@ -54,8 +55,8 @@ main(int argc, char** argv)
     char* server_ip = argv[1];
     
     if (argc != 2) {
-        printf("Usage:   xftp ip port\n");
-        printf("Example: xftp 192.168.56.107\n");
+        printf("Usage:   ./xftp ip port\n");
+        printf("Example: ./xftp 192.168.56.107\n");
         return 0;
     }
 

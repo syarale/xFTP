@@ -1,9 +1,10 @@
+#include <arpa/inet.h>
 #include <stdio.h>
 #include <stdio.h>
 #include <sys/socket.h>
 #include <string.h>
 #include <netinet/in.h>
-#include <arpa/inet.h>
+#include <unistd.h>
 
 #include "common.h"
 #include "netbuf.h"
@@ -31,4 +32,21 @@ connect_server(char* server_ip)
         return conn_ret;
     }
     return sockfd;
+}
+
+static ssize_t
+send_message(int sockfd, const char* buf, size_t len)
+{
+    ssize_t ret;
+    ret = write(sockfd, buf, len);
+    return ret;
+}
+
+
+ssize_t
+send_data(int sockfd, const char* buf, size_t len)
+{
+    ssize_t ret;
+    ret = write(sockfd, buf, len);
+    return ret;
 }

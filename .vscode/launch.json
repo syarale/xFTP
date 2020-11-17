@@ -8,7 +8,7 @@
             "name": "gcc - 生成和调试活动文件",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/root/leisy_xftp/sftp",
+            "program": "/root/leisy_xftp/unitest_main",
             // "program": "/root/leisy_xftp/Makefile",
             "args": [],
             "stopAtEntry": false,
@@ -23,7 +23,8 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "C/C++: gcc build active file",
+            // "preLaunchTask": "C/C++: gcc build active file",
+            "preLaunchTask": "make xftp",
             "miDebuggerPath": "/usr/bin/gdb"
         }
     ]
