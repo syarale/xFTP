@@ -1,4 +1,5 @@
 #include <arpa/inet.h>
+#include <assert.h>
 #include <stdio.h>
 #include <stdio.h>
 #include <sys/socket.h>
@@ -47,6 +48,21 @@ ssize_t
 send_data(int sockfd, const char* buf, size_t len)
 {
     ssize_t ret;
+    struct request *req;
+
+    /* test : request_new() */
+    // printf("start request...\n");
+    req = request_new();
+    // printf("finished request...\n");
+
+    assert(req != NULL);
+    printf("id: %d \n", req->id);
+    printf("type: %d \n", req->type);
+    if (req->data == NULL) {
+        printf("data: NULL\n");
+    }
+    printf("len: %d \n", req->data_len);
+
     ret = write(sockfd, buf, len);
     return ret;
 }
