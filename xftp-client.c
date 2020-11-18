@@ -35,7 +35,7 @@ connect_server(char* server_ip)
 }
 
 static ssize_t
-send_message(int sockfd, const char* buf, size_t len)
+send_msg(int sockfd, const char* buf, size_t len)
 {
     ssize_t ret;
     ret = write(sockfd, buf, len);

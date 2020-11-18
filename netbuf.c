@@ -1,7 +1,6 @@
 #include "netbuf.h"
 
 
-
 // struct netbuf {
 // 	u_char *d;		    /* Data */
 // 	size_t off;		    /* First available byte is buf->d + buf->off */

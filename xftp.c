@@ -19,7 +19,8 @@ interactive_loop(FILE* fp, int sockfd)
     char cmd_buf[MAX_CMD_LINE + 1];                 // the last char is '\0'
     char recv_buf[MAX_CMD_LINE + 1];
 
-    printf("[INFO]: Connect to remote server, wait to input.\n");
+    // printf("[INFO]: Connect to remote server, wait to input.\n");
+    LOG("Connect to remote server, wait to input...");
     for (;;) {
         printf("xftp> ");
         fgets(cmd_buf, sizeof(cmd_buf) - 1, stdin);
