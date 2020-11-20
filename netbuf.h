@@ -4,8 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef unsigned int u_int;
-typedef unsigned char u_char;
+
 
 #define NETBUF_SIZE_INIT	256		    /* Initial allocation */
 #define NETBUF_SIZE_MAX		0x8000000	/* Hard maximum size */

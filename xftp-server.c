@@ -45,8 +45,8 @@ main(int argc, char** argv)
     int client_fd;
     int recv_ret;
     int in, out, max;
-    int ilen, olen;
-    char recv_buf[100];
+    int ilen, olen, len;
+    char buf[4*4096];   // TODO：modify the buf size.
     int is_out;
     const char* ret = "hello client";
     fd_set rset, wset;
@@ -87,18 +87,24 @@ main(int argc, char** argv)
         }
 
         if (FD_ISSET(in, &rset)) {
-            recv_ret = read(client_fd, recv_buf, MAX_DATA_MESSAGE);
-            if (recv_ret == 0){
-                break;
+            len = read(client_fd, buf, sizeof(buf));
+            if (len == 0) {
+                LOG("Read EOF.");
+                exit(0);
+            } else if(len == -1) {
+                ERROR("Failed to read: %s", strerror(errno));
+                exit(1);
+            } else {
+                
             }
-            printf("[xftp-server]: Get data:%s\n", recv_buf);
-            if (strncmp(recv_buf, "exit", 4) == 0) {
+            printf("[xftp-server]: Get data:%s\n", buf);
+            if (strncmp(buf, "exit", 4) == 0) {
                 break;
             }
         }
 
         if (FD_ISSET(out, &wset)) {
-            write(client_fd, ret, MAX_DATA_MESSAGE);
+            len = write(client_fd, ret, MAX_DATA_MESSAGE);
             printf("[xftp-server]: Send data:%s\n\n", ret);
         }
 

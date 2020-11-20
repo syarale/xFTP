@@ -53,8 +53,8 @@ xftp-server.o: xftp-server.c
 netbuf.o: netbuf.c
 	gcc -c netbuf.c -o netbuf.o
 
-unittest_main: unittest_main.o netbuf.o
-	gcc unitest_main.o netbuf.o -o unitest_main
+unittest_main: unittest_main.o netbuf.o common.o
+	gcc unitest_main.o netbuf.o  common.o -o unitest_main
 
 unittest_main.o: unittest_main.c
 	gcc -c unittest_main.c -o unitest_main.o

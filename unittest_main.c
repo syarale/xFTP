@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "common.h"
 #include "netbuf.h"
 
 // struct netbuf {
@@ -31,10 +33,31 @@ void test_netbuf_new() {
     return;
 }
 
+void test_poke_peek()
+{
+    u_char *ptr = (u_char *)malloc(sizeof(u_int32_t));
+    u_int32_t i_32 = 0x00553247;
+    u_int32_t o_32;
+    u_int8_t i_8 = 0x65;
+    u_int8_t o_8;
 
+    poke_u32(ptr, i_32);
+    peek_u32(ptr, &o_32);
+    printf("%d \n", o_32);
+    printf("%d \n", i_32);
+
+    poke_u8(ptr, i_8);
+    peek_u8(ptr, &o_8);
+    printf("%d \n", o_8);
+    printf("%d \n", i_8);
+
+    free(ptr);
+    return;
+}
 
 int main()
 {
-    test_netbuf_new();
+    // test_netbf_new();
+    test_poke_peek();
     return 0;
 }
