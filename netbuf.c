@@ -1,3 +1,4 @@
+#include "common.h"
 #include "netbuf.h"
 
 
@@ -31,4 +32,26 @@ netbuf_new(void)
     }
 
     return ret;
+}
+
+
+
+/*
+ * Copy bytes to netbuf.
+ * Return 0 on success, or non-zero on error.
+ */
+int
+netbuf_put(struct netbuf *net_buf, const void *ptr, size_t len)
+{
+    int r;
+    u_char *w_ptr;  // store bytes from where w_ptr point to in netbuf;
+    
+    r = netbuf_reserve(net_buf, len, &w_ptr);
+    if (r != 0) {
+        ERROR("Failed to reserve data in netbuf.");
+        return r;
+    }
+
+    memcpy(w_ptr, ptr, len);
+    return 0;
 }

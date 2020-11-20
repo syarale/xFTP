@@ -11,6 +11,10 @@
 #include "netbuf.h"
 
 
+struct netbuf *iqueue;
+struct netbuf *oqueue;
+
+
 static int
 service_loop(int client_fd)
 {
@@ -45,9 +49,9 @@ main(int argc, char** argv)
     int client_fd;
     int recv_ret;
     int in, out, max;
-    int ilen, olen, len;
+    size_t ilen, olen, len;
     char buf[4*4096];   // TODO：modify the buf size.
-    int is_out;
+    int is_out, r;
     const char* ret = "hello client";
     fd_set rset, wset;
     
@@ -64,8 +68,7 @@ main(int argc, char** argv)
     is_out = 0;
     olen = 1;
     for (;;) {
-        // Must clear rset and wset before call select every time
-        FD_ZERO(&rset);     
+        FD_ZERO(&rset);    // Must clear rset and wset before call select every time
         FD_ZERO(&wset);
         
         FD_SET(in, &rset);
@@ -95,7 +98,12 @@ main(int argc, char** argv)
                 ERROR("Failed to read: %s", strerror(errno));
                 exit(1);
             } else {
-                
+                r = netbuf_put(iqueue, buf, len);
+                if (r != 0) {
+                    ERROR("Failed to put buffer in iqueue");
+                    exit(1);
+                }
+
             }
             printf("[xftp-server]: Get data:%s\n", buf);
             if (strncmp(buf, "exit", 4) == 0) {

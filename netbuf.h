@@ -24,4 +24,10 @@ struct netbuf {
  */
 struct netbuf *netbuf_new(void);
 
+/*
+ * Copy bytes to netbuf.
+ * Return 0 on success, or non-zero on error.
+ */
+int netbuf_put(struct netbuf *net_buf, const void *ptr, size_t len);
+
 
