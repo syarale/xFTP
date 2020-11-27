@@ -1,7 +1,10 @@
+#include <unistd.h>
 #include <assert.h>
+#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
+
 #include "common.h"
 
 
@@ -54,3 +57,6 @@ peek_u8(const u_char *ptr, u_int8_t *number)
 
     return;
 }
+
+
+

@@ -3,7 +3,7 @@
 
 
 int connect_server(char* server_ip);
-ssize_t send_data(const int sockfd, const char* buf, size_t len);
+ssize_t send_data(const int sockfd, const u_char* buf, size_t len);
 
 
 /* 

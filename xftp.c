@@ -62,6 +62,9 @@ main(int argc, char** argv)
     }
 
     sockfd = connect_server(server_ip);
+    if (sockfd == -1) {
+        return 0;
+    }
     err = interactive_loop(stdin, sockfd);
 
     return 0;

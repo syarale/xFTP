@@ -74,6 +74,8 @@ main(int argc, char** argv)
         FD_SET(in, &rset);
         if ((olen % 2) == 0) {
             FD_SET(out, &wset);
+            is_out = 0;
+        } else {
             is_out = 1;
         }
         
@@ -98,15 +100,18 @@ main(int argc, char** argv)
                 ERROR("Failed to read: %s", strerror(errno));
                 exit(1);
             } else {
-                r = netbuf_put(iqueue, buf, len);
+                // r = netbuf_put(iqueue, buf, len);
+                // printf("[xftp-server]: get data: %s\n", buf+9);
+                printf("buf len is: %d\n", len);
+                r = 0;
                 if (r != 0) {
                     ERROR("Failed to put buffer in iqueue");
                     exit(1);
                 }
 
             }
-            printf("[xftp-server]: Get data:%s\n", buf);
-            if (strncmp(buf, "exit", 4) == 0) {
+            printf("[xftp-server]: Get data: %s\n", buf + 9);
+            if (strncmp(buf+9, "exit", 4) == 0) {
                 break;
             }
         }

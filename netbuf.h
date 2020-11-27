@@ -9,6 +9,7 @@
 #define NETBUF_SIZE_INIT	256		    /* Initial allocation */
 #define NETBUF_SIZE_MAX		0x8000000	/* Hard maximum size */
 #define NETBUF_SIZE_INC	    256		    /* Preferred increment length */
+#define NETBUF_PACK_MIN	    8192		/* Minimim packable offset */
 
 struct netbuf {
 	u_char *data;		/* Data */

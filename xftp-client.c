@@ -109,26 +109,26 @@ send_request(const int sockfd, struct request *req)
 }
 
 // /* test modify requset */
-// void print_request(const struct request *req)
-// {
-//     printf("id: %d\n", req->id);
-//     printf("type: %d\n", req->type);
-//     printf("len: %d\n", req->data_len);
+void print_request(const struct request *req)
+{
+    printf("id: %d\n", req->id);
+    printf("type: %d\n", req->type);
+    printf("len: %d\n", req->data_len);
 
-//     if (req->data == NULL) {
-//         printf("data: NULL \n");
-//     } else {
-//         printf("data: %s \n", req->data);
-//     }
-//     return;
-// }
+    if (req->data == NULL) {
+        printf("data: NULL \n");
+    } else {
+        printf("data: %s \n", req->data);
+    }
+    return;
+}
 
 /*
  * Send 'len' byte of buffer to server by socket.
  * Return the size of tranfering on success, or -1 on error.
  */
 ssize_t
-send_data(const int sockfd, const char* buf, size_t len)
+send_data(const int sockfd, const u_char* buf, size_t len)
 {
     ssize_t ret;
     struct request *req = request_new();
@@ -147,10 +147,12 @@ send_data(const int sockfd, const char* buf, size_t len)
     }
 
     memcpy(req->data, buf, len);
+    req->data_len = len;
     
     /* test */
     print_request(req);
 
-    ret = write(sockfd, buf, len);
+    ret = send_request(sockfd, req);
+    // ret = write(sockfd, buf, len);
     return ret;
 }
